@@ -1,0 +1,171 @@
+\usepackage{luatexja}
+\usepackage{pgfpages}
+\usepackage[math-style=TeX]{unicode-math}
+\usepackage{amsmath, amssymb}
+% \usepackage{bm}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{ascmac}
+\usepackage{luatexja-ruby}
+\usepackage{tabularray}
+
+%%%%% 定理環境のパッケージ %%%%%
+\usepackage{mdframed}
+
+%%%%% 定義や定理環境の設定 %%%%%
+
+\theoremstyle{definition}
+\newmdtheoremenv{teigi}{定義}[section]
+\newmdtheoremenv{teiri}[teigi]{定理}
+\newmdtheoremenv{meidai}[teigi]{命題}
+\newmdtheoremenv{kei}[teigi]{系}
+\newmdtheoremenv{hodai}[teigi]{補題}
+\newmdtheoremenv{chui}[teigi]{注意}
+\newmdtheoremenv{mondai}[teigi]{問題}
+
+\renewenvironment{definition}{
+  \vspace{2.5mm}
+  \begin{teigi}
+}{
+  \end{teigi}
+  \vspace{2.5mm}
+}
+\renewenvironment{theorem}{
+  \vspace{2.5mm}
+  \begin{teiri}
+}{
+  \end{teiri}
+  \vspace{2.5mm}
+}
+\newenvironment{proposition}{
+  \vspace{2.5mm}
+  \begin{meidai}
+}{
+  \end{meidai}
+  \vspace{2.5mm}
+}
+\renewenvironment{corollary}{
+  \vspace{2.5mm}
+  \begin{kei}
+}{
+  \end{kei}
+  \vspace{2.5mm}
+}
+\renewenvironment{lemma}{
+  \vspace{2.5mm}
+  \begin{hodai}
+}{
+  \end{hodai}
+  \vspace{2.5mm}
+}
+\newenvironment{remark}{
+  \vspace{2.5mm}
+  \begin{chui}
+}{
+  \end{chui}
+  \vspace{2.5mm}
+}
+\newenvironment{question}{
+  \vspace{2.5mm}
+  \begin{mondai}
+}{
+  \end{mondai}
+  \vspace{2.5mm}
+}
+
+
+\usepackage[
+  backend=biber,
+  style=apa
+]{biblatex}
+
+%%%%% TikZ関連パッケージ %%%%%
+\usepackage{tikzpeople}
+\usepackage{smartdiagram, sansmath, pgf-pie, wheelchart, fontawesome5}
+\usepackage{adjustbox}
+
+\UseTblrLibrary{booktabs}
+
+\pdfstringdefDisableCommands{%  `%`を置いて改行コードを無効化するのを忘れずに
+  \def\\{}% 
+}
+
+% itemizeやenumerate環境のitemsepを広くする
+\setbeamertemplate{itemize/enumerate body begin}{\setlength{\itemsep}{1.5ex}}
+
+% 定理環境に番号を付与する
+\setbeamertemplate{theorems}[numbered]
+
+\DeclareLanguageMapping{japanese}{english}
+\DefineBibliographyStrings{japanese}{
+  and = {・},
+  andothers = {ほか}
+}
+
+\setbeamerfont{quotation}{shape=\upshape}
+\DeclareDelimFormat{finalnamedelim}{%
+  \iffieldequalstr{langid}{japanese}{・}{\addspace\&\space}%
+}
+\DeclareDelimFormat[textcite]{finalnamedelim}{%
+  \iffieldequalstr{langid}{japanese}{・}{\addspace and\space}%
+}
+
+\usetikzlibrary{positioning, arrows.meta, calc, shapes.arrows, shapes.callouts, shapes.symbols, shapes.geometric}
+\tcbuselibrary{skins, theorems, breakable}
+
+%%%%% 枠を作る %%%%%
+
+\newenvironment{purpose}[1]{
+  \begin{tcolorbox}[
+    enhanced,
+    colframe=green!30!black,
+    colback=green!30,
+    title=#1,
+    fonttitle=\bfseries\sffamily
+  ]
+}{
+  \end{tcolorbox}
+}
+
+\newenvironment{conclusion}{
+  \begin{tcolorbox}[
+    enhanced,
+    frame hidden,
+    colback=blue!3,
+    borderline west={2pt}{0pt}{blue}
+  ]
+}{
+  \end{tcolorbox}
+}
+
+\newenvironment{bluebox}[1]{
+    \begin{tcolorbox}[
+        colframe=blue,
+        colback=white,
+        title=#1,
+        fonttitle=\bfseries,
+        breakable=true,
+    ]
+}{
+    \end{tcolorbox}
+}
+
+\newcommand{\insertfullsection}{\insertsectionnumber. \insertsection}
+\newcommand{\insertfullsubsection}{\insertsectionnumber.\insertsubsectionnumber. \insertsubsection}
+
+%%%%% 数式等に関連 %%%%%
+
+% \renewcommand{\bm}[1]{\symbfit{#1}}
+\newcommand{\bm}[1]{\symbfit{#1}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\DeclareMathOperator*{\argmax}{argmax}
+
+%%%%% ナンバリングの再定義 %%%%%
+\setbeamertemplate{caption}[numbered]
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}  % captionのナンバリングに章番号を反映させる。
+
+\numberwithin{equation}{section}
