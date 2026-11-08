@@ -175,6 +175,7 @@
     \end{column}
 
     % 右列：4要素の定義と重要前提
+    % antigravity cliへの要望: `./out/main.pdf`にあるように、右列の4つの中心要素が上下で欄外へはみ出ている。これを修正するために、一番最後の要素「必須の前提条件ではない」というのを、もう少し主張を小さくすることで、何とか右列の上下がはみ出ないようにできないか？
     \begin{column}{0.52\textwidth}
       \begin{tikzpicture}[node distance=4pt]
         \node[card, text width=0.93\textwidth] (c1) {
@@ -274,6 +275,7 @@
         };
         \node[card, draw=mOrange, fill=mOrange!8, text width=0.93\textwidth, below=5pt of trap] {
           \textbf{\color{mOrange!90!black}【考察メモ】「意志力で抑え込む」のは現実的か？}\\
+          % antigravity cliへ: この部分は私が純粋に「意志力で抑え込む」というのが、本書では専門的で美しい技法が述べられているのとは対照的に、力業のように映ったので、それを指摘したにすぎません。そのため、考察欄ではあまり断定的な表現を用いない、もしくは考察をそもそも埋め込まないようにしてください。
           反射を力づくで我慢するだけでなく、後述の「実践を通じた習慣化（p. 20, 33）」や「クライエントへの純粋な好奇心・探求」へと意識を向けることが実践上の鍵となる。
         };
       \end{tikzpicture}
@@ -288,6 +290,7 @@
         };
 
         % 天秤・交差の図
+        % antigravity cliへの意見: `./out/main.pdf/`にあるように、天秤・交差の図画上手く表現されていません。
         \node[goodbox, text width=2.8cm, align=center, below left=6pt and -1pt of wish.south] (w1) {
           \textbf{クライエントの願望}\\
           \scriptsize 自ら設定したテーマ\\具体的な問題・懸念
@@ -339,6 +342,7 @@
     \node[font=\normalsize\bfseries, mTeal] at (0,0) {受 容};
 
     % 4頂点のラベルと対比カード
+    % ①と②のラベルカードを、③と④のラベルカードの見た目にそろえた方がいいですので、そのようにしてください。
     % 上：絶対的価値
     \node[font=\footnotesize\bfseries, mTeal, above=1pt of N] (lblN) {① 絶対的価値 (Absolute Worth)};
     \node[warnbox, text width=3.8cm, font=\scriptsize, left=12pt of lblN] {
@@ -402,6 +406,7 @@
           \textbf{どんぐり}\\
           \scriptsize 現在の姿\\（潜在的可能性）
         };
+        % antigravity cliへ: 矢印の向きが左（どんぐり）から右（ブナの木）に伸びると良さそうです。それと、左のノードと右のノードの間が狭く、真ん中の「受容・最適条件）というノードとそれぞれのノードが重複しています（詳しくは`./out/main.pdf`を参照）。この距離を調節してください。
         \node[goodbox, text width=2.6cm, align=center, below right=8pt and -2pt of mb.south] (beech) {
           \textbf{ブナの木}\\
           \scriptsize 成熟した最終状態\\＝\textbf{テロス (\textit{telos})}
@@ -659,6 +664,7 @@
           \textbf{変化賛成派}\\
           \scriptsize 変化を良しとする議論\\（チェンジトーク）
         };
+        % antigravity cliへ: 両価性の両矢印が`./out/main.pdf`ではつぶれてしまっています。もうすこし両矢印がつぶれないよう、矢印の長さが長くなるようにしてください。
         \draw[<->, dashed, thick, mTeal] (sustain.east) -- node[above, font=\tiny]{両価性} (change.west);
 
         \node[accentbox, text width=5.6cm, align=center] (role) at (0, -1.2) {
