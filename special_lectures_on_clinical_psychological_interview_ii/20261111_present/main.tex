@@ -1,271 +1,796 @@
-\documentclass[10.5pt, aspectratio=169]{beamer}
+\documentclass[10pt, aspectratio=169]{beamer}
 
 \usetheme{metropolis}
 \usecolortheme{default}
 
-% ここに自作スタイルファイルを読み込む
+% 図表・装飾パッケージ
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, fit}
+\usepackage{booktabs}
 
+% フォント設定
 \usepackage{luatexja-fontspec}
 \setmainjfont{Harano Aji Mincho}
-\setmainjfont{Harano Aji Gothic}
+\setsansjfont{Harano Aji Gothic}
+
+% Metropolisのデフォルトカラーに調和する補助色定義
+\definecolor{mTeal}{HTML}{23373B}
+\definecolor{mOrange}{HTML}{EB811B}
+\definecolor{mGreen}{HTML}{14B03D}
+\definecolor{mRed}{HTML}{C0392B}
+\definecolor{mBlue}{HTML}{2980B9}
+\definecolor{mLightBg}{HTML}{F2F4F4}
+\definecolor{mWarnBg}{HTML}{FDEDEC}
+\definecolor{mGoodBg}{HTML}{EAFAF1}
+\definecolor{mInfoBg}{HTML}{EBF5FB}
+
+% 共通TikZスタイル
+\tikzset{
+  >=Stealth,
+  card/.style={
+    rectangle, rounded corners=3pt, draw=mTeal!30, fill=white,
+    line width=0.6pt, inner sep=5pt, align=left, font=\footnotesize
+  },
+  titlecard/.style={
+    rectangle, rounded corners=3pt, draw=mTeal!60, fill=mLightBg,
+    line width=0.8pt, inner sep=5pt, align=left, font=\footnotesize
+  },
+  goodbox/.style={
+    rectangle, rounded corners=3pt, draw=mGreen!70!black, fill=mGoodBg,
+    line width=0.8pt, inner sep=5pt, align=left, font=\footnotesize
+  },
+  warnbox/.style={
+    rectangle, rounded corners=3pt, draw=mRed!80!black, fill=mWarnBg,
+    line width=0.8pt, inner sep=5pt, align=left, font=\footnotesize
+  },
+  accentbox/.style={
+    rectangle, rounded corners=3pt, draw=mOrange!90!black, fill=mOrange!10,
+    line width=0.8pt, inner sep=5pt, align=left, font=\footnotesize
+  },
+  pill/.style={
+    rectangle, rounded corners=8pt, fill=mTeal, text=white,
+    inner xsep=6pt, inner ysep=2pt, font=\scriptsize\bfseries
+  }
+}
+
+% スライド間の余白調整
+\setbeamersize{text margin left=7mm, text margin right=7mm}
 
 % スライドのメタデータ
-% ここはユーザーからの指示に応じて変更する
 \title{第2章 動機づけ面接のスピリット}
 \subtitle{第1部 動機づけ面接とは何か？}
 \author{森口志龍}
-% \institute{所属}
 \date{2026-11-11}
 
 \begin{document}
 
+% ------------------------------------------
+% 1. タイトル
+% ------------------------------------------
 \maketitle
 
-\begin{frame}{目次}
-  \tableofcontents
+% ------------------------------------------
+% 2. 目次と章頭言（エピグラフ）
+% ------------------------------------------
+\begin{frame}{本日の構成と章頭言（p. 19）}
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.44\textwidth}
+      \textbf{\color{mTeal}発表の構成}
+      \vspace{0.3em}
+      \footnotesize
+      \tableofcontents
+    \end{column}
+    \begin{column}{0.53\textwidth}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.93\textwidth] (q1) {
+          \textbf{\color{mTeal}人間観（のちに述べる「メンシェンビルド」）：}\\[2pt]
+          「ある人を\textbf{あるがままのその人}として扱えば、その人はそのままでいるだろうが、その人が\textbf{そうなるべき／なれるはずの理想の人物}になっているかのように扱えば、その人はそのような人物になるだろう。」
+          \begin{flushright}\scriptsize ―― ヨハン・ヴォルフガング・ゲーテ\end{flushright}
+        };
+        \node[accentbox, text width=0.93\textwidth, below=6pt of q1] (q2) {
+          \textbf{\color{mOrange!80!black}思いやり（Compassion）の本質：}\\[2pt]
+          「思いやりとは、\textbf{他人が苦しみから解放されるのを見たいと願うこと}である。」
+          \begin{flushright}\scriptsize ―― ダライ・ラマ\end{flushright}
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % ==========================================
 \section{導入：なぜ「スピリット」なのか}
 % ==========================================
 
-\begin{frame}{技法（歌詞）とスピリット（曲）}
-  \begin{block}{1980年代の気づき (Rollnick \& Miller, 1995)}
-    \begin{itemize}
-      \item 当初は「どう行うか」という\textbf{技法自体}に焦点を当てがちだった。
-      \item しかし研修生の実践を見ると、「\textbf{歌詞は教えたのに曲は教えていない}」かのようだった。
-      \item 根底にあるスピリット（態度と心構え）が不可欠であることに気づいた。
-    \end{itemize}
-  \end{block}
+% ------------------------------------------
+% 3. 技法（歌詞）とスピリット（曲）
+% ------------------------------------------
+\begin{frame}{導入：技法（歌詞）とスピリット（曲）（pp. 19--20）}
+  \footnotesize
+  1980年代、MIを教え始めた頃は「どう行うか（技法）」に焦点を当てがちだったが、研修生の実践を見て\textbf{「歌詞は教えたのに曲は教えていない」}かのようだと気づいた（Rollnick \& Miller, 1995）。
 
-  \begin{alertblock}{スピリットが欠けた場合の危険性}
-    \begin{itemize}
-      \item 人を操作し、やりたくないことをさせる「皮相な（うわべだけの）トリック」に堕してしまう。
-      \item 「間違い指摘反射」の別バージョンや、知恵で敵に勝つ知的ゲームになってしまう。
-    \end{itemize}
-  \end{alertblock}
+  \vspace{0.4em}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.95, transform shape]
+    % 左：スピリット欠如
+    \node[warnbox, text width=6.4cm, minimum height=3.3cm] (bad) at (0,0) {
+      \textbf{\color{mRed!80!black}× 技法（歌詞）のみ・スピリット不在}\\[3pt]
+      \begin{itemize}\setlength{\itemsep}{1pt}
+        \item やりたくないことをさせる\textbf{「皮相なトリック」}
+        \item クライエントを誘導する「プロのマジシャン」
+        \item \textbf{「間違い指摘反射」}の別バージョン
+        \item 知恵で敵に勝つことをゴールとする\textbf{知的ゲーム}
+      \end{itemize}
+    };
+    % 右：技法＋スピリット
+    \node[goodbox, text width=6.4cm, minimum height=3.3cm] (good) at (9,0) {
+      \textbf{\color{mGreen!60!black}◎ 技法（歌詞）＋ スピリット（曲）}\\[3pt]
+      \begin{itemize}\setlength{\itemsep}{1pt}
+        \item 実践の基盤となる\textbf{態度と心構え（視点）}
+        \item クライエント自身の変化への動機とリソースを活性化させる協働プロセス
+        \item 経験的構成要素（心で感じる）と\textbf{行動的構成要素（行動で表現する）}の両立
+      \end{itemize}
+    };
+    \draw[->, very thick, mTeal] (bad.east) -- node[above, font=\scriptsize\bfseries]{心構えの統合} (good.west);
+  \end{tikzpicture}
+  \end{center}
+
+  \vspace{0.2em}
+  \begin{block}{\scriptsize 原注1：MIを「単純なトリック」とみなす風潮への警鐘（p. 20）}
+    \scriptsize
+    某書（Pantalon, 2011『思い通りに相手を変える6つのステップ』）の「7分以内に誰にでも何でもさせる」という態度はMIのスピリットと正反対である。「ランチを食べつつMIをスタッフに教えてほしい」といったお気楽な依頼や、初版の「言語ゲーム」的な説明に対する著者らの反省が込められている。
+  \end{block}
 \end{frame}
 
-\begin{frame}{MIのスピリットの4つの中心要素}
-  MIのスピリットは以下の4つの要素が交わるところに体現される（相互に関連し、経験的・行動的構成要素を持つ）。
+% ------------------------------------------
+% 4. MIのスピリットの全体像（Box 2.2）
+% ------------------------------------------
+\begin{frame}{MIの根底にあるスピリット：4つの中心要素（pp. 20, 31）}
+  \begin{columns}[c, onlytextwidth]
+    % 左列：Box 2.2 ベン図の再現
+    \begin{column}{0.46\textwidth}
+      \centering
+      \textbf{\scriptsize BOX 2.2：MIの根底にあるスピリット}\\[2pt]
+      \begin{tikzpicture}[scale=0.82, transform shape]
+        \draw[rounded corners=6pt, thick, mTeal!50, fill=mLightBg!40] (-3.1,-3.1) rectangle (3.1,3.1);
+        % 4つの円
+        \fill[mBlue!20, opacity=0.6] (0, 1.15) circle (1.55cm);
+        \fill[mGreen!20, opacity=0.6] (1.15, 0) circle (1.55cm);
+        \fill[mOrange!25, opacity=0.6] (0, -1.15) circle (1.55cm);
+        \fill[mRed!20, opacity=0.6] (-1.15, 0) circle (1.55cm);
 
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{1. パートナーシップ}
-        人の「ために」、人と「共に」行う能動的な協働。
-      \end{exampleblock}
-      \begin{exampleblock}{2. 受容}
-        相手が提示するものを心底まで受け入れ、尊重する態度。
-      \end{exampleblock}
+        \draw[thick, mTeal] (0, 1.15) circle (1.55cm);
+        \draw[thick, mTeal] (1.15, 0) circle (1.55cm);
+        \draw[thick, mTeal] (0, -1.15) circle (1.55cm);
+        \draw[thick, mTeal] (-1.15, 0) circle (1.55cm);
+
+        % ラベル
+        \node[font=\footnotesize\bfseries, mTeal] at (0, 2.05) {パートナーシップ};
+        \node[font=\footnotesize\bfseries, mTeal] at (1.95, 0) {受容};
+        \node[font=\footnotesize\bfseries, mTeal] at (0, -2.05) {引き出す};
+        \node[font=\footnotesize\bfseries, mTeal] at (-1.9, 0) {思いやり};
+
+        % 中央
+        \node[font=\scriptsize\bfseries, align=center, mTeal] at (0, 0) {MIの\\スピリット};
+      \end{tikzpicture}
     \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{3. 思いやり (Compassion)}
-        相手の福祉を積極的に増進し、ニーズを最優先すること。
-      \end{exampleblock}
-      \begin{exampleblock}{4. 引き出す (Evocation)}
-        相手の内側にある強み、動機、リソースを汲み出すこと。
-      \end{exampleblock}
+
+    % 右列：4要素の定義と重要前提
+    \begin{column}{0.52\textwidth}
+      \begin{tikzpicture}[node distance=4pt]
+        \node[card, text width=0.93\textwidth] (c1) {
+          \textbf{\color{mBlue!80!black}1. パートナーシップ (Partnership)}\\
+          人の「ために」、人と「共に」行う専門家同士の能動的な協働。
+        };
+        \node[card, text width=0.93\textwidth, below=of c1] (c2) {
+          \textbf{\color{mGreen!70!black}2. 受容 (Acceptance)}\\
+          相手が提示するものを心底まで受け入れ、尊重する4側面の態度。
+        };
+        \node[card, text width=0.93\textwidth, below=of c2] (c3) {
+          \textbf{\color{mRed!80!black}3. 思いやり (Compassion)}\\
+          相手の福祉を積極的に増進し、ニーズを満たすことを最優先する。
+        };
+        \node[card, text width=0.93\textwidth, below=of c3] (c4) {
+          \textbf{\color{mOrange!90!black}4. 引き出す (Evocation)}\\
+          欠陥を補うのではなく、内なる強み・動機・知恵を汲み出す。
+        };
+        \node[accentbox, text width=0.93\textwidth, below=6pt of c4] (note) {
+          \textbf{※必須の前提条件ではない（p. 20）：}\\
+          最初から完璧な人間である必要はない。\textbf{MIを実践すること自体が、これら4つを骨の髄まで染まった習慣にしてくれる。}
+        };
+      \end{tikzpicture}
     \end{column}
   \end{columns}
-
-  \vspace{0.5em}
-  \footnotesize{※スピリットは実践前の「必須の前提条件」ではなく、\textbf{MIを実践すること自体がこれらを習慣にしてくれる}。}
 \end{frame}
 
 % ==========================================
 \section{1. パートナーシップ}
 % ==========================================
 
-\begin{frame}{パートナーシップ：専門家同士の協働}
-  \begin{block}{「対して」ではなく「共に」}
-    \begin{itemize}
-      \item 専門家が受け身の相手（まな板の上の鯉）に行うものではない。
-      \item \textbf{クライエントはその人自身の専門家}である（本人以上にその人を知る人はいない）。
-      \item 援助者は「同伴者」であり、忠告よりも探求、説得よりも興味と支援を行う。
-    \end{itemize}
-  \end{block}
+% ------------------------------------------
+% 5. パートナーシップ：専門家同士の協働と比喩
+% ------------------------------------------
+\begin{frame}{1. パートナーシップ：専門家同士の協働（pp. 20--23）}
+  \footnotesize
+  教師が生徒に、専門家が「まな板の上の鯉」のような受け身の相手に対して行うことはMIではない。\\
+  \textbf{MIは誰かに「向けて／対して」ではなく、人の「ために」、人と「共に」行われる。}
 
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{比喩：レスリングではなく社交ダンス}
-        \begin{itemize}
-          \item 相手に抗うのではなく、共に動く。
-          \item カウンセラーが巧みにリードを取りつつも、パートナーシップなしにダンスは成立しない。
-        \end{itemize}
-      \end{exampleblock}
+  \vspace{0.4em}
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.9\textwidth, minimum height=4.1cm] {
+          \textbf{\color{mTeal}① 二人の専門家と同伴者}\\[4pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item \textbf{クライエントはその人自身の専門家}（本人以上にその人を知る人はいない）。
+            \item 援助者は\textbf{「同伴者」}であり、話す量は相手より少ないのが普通。
+            \item 忠告より\textbf{探求}、説得や議論より\textbf{興味と支援}（強要しない）。
+          \end{itemize}
+        };
+      \end{tikzpicture}
     \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{alertblock}{避けるべき「専門家の罠」}
-        \begin{itemize}
-          \item 「カウンセラーが正しい答えをすべて持っており、それを提供するのが仕事だ」という想定を捨てる。
-          \item 間違い指摘反射を意志力で抑え込む。
-        \end{itemize}
-      \end{alertblock}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.9\textwidth, minimum height=4.1cm] {
+          \textbf{\color{mGreen!60!black}② 比喩：社交ダンス}\\[4pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item \textbf{「レスリングではなく社交ダンス」}（Jeff Allisonの隠喩）。
+            \item 敵を力で負かしてフォール勝ちするのではなく、共に動く。
+            \item カウンセラーは\textbf{巧みにリードを取る}が、パートナーシップなしにダンスは存在しない。
+          \end{itemize}
+        };
+      \end{tikzpicture}
     \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{パートナーシップにおける誠実さと敬意}
-  \begin{itemize}
-    \item \textbf{2つの願望の調和}
-      \begin{itemize}
-        \item クライエントの願望だけでなく、カウンセラー自身の願望（アジェンダ・価値観）についても意識し、\textbf{正直であること}が必須。
-      \end{itemize}
-    \vspace{0.5em}
-    \item \textbf{深い尊敬と特権}
-      \begin{itemize}
-        \item MIの会話は「ソファーで隣に座り、相手の誕生から今までの写真アルバムを一緒に見ること」に似ている。
-        \item カウンセラーの目的は、自分の世界観を披露することではなく、\textbf{相手の目線から世界を見ること}。
-        \begin{itemize}
-          \item カウンセラーは相手の変化に立ち会える特権を与えられている
-        \end{itemize}
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-% ==========================================
-\section{2. 受容}
-% ==========================================
-
-\begin{frame}{受容（Acceptance）の4つの側面}
-  「受容」とは行為の承認や現状の黙認ではない。Carl Rogersの仕事に源流を持つ4つの側面から構成される。
-
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
-      \begin{block}{① 絶対的価値 (Absolute Worth)}
-        \begin{itemize}
-          \item 無条件の肯定的関心・非支配的な配慮。
-          \item \textbf{反対：}条件付きの価値づけ（判断の態度）。
-          \item ありのままで受容されると自由な変化が可能になる（自己実現傾向・テロス）。
-        \end{itemize}
-      \end{block}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{block}{② 正確な共感 (Accurate Empathy)}
-        \begin{itemize}
-          \item 相手の内的世界を「あたかも」自分自身のものであるかのように理解する努力（同情や同一化ではない）。
-          \item \textbf{反対：}自分の視点の押しつけ。
-        \end{itemize}
-      \end{block}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[accentbox, text width=0.9\textwidth, minimum height=4.1cm] {
+          \textbf{\color{mOrange!80!black}③ 比喩：写真アルバム}\\[4pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item ソファーで隣に座り、\textbf{相手の誕生から今までの写真アルバムを一緒に見る}ような会話。
+            \item 自分の世界観を壇上から披露するのではなく、\textbf{相手の目線から世界を見る}。
+            \item 変化に立ち会える\textbf{「特権」}。
+          \end{itemize}
+        };
+      \end{tikzpicture}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}
+% ------------------------------------------
+% 6. 専門家の罠と「2つの願望」の調和
+% ------------------------------------------
+\begin{frame}{「専門家の罠」の回避と2つの願望の調和（pp. 21--22）}
+  \begin{columns}[T, onlytextwidth]
+    % 左：専門家の罠
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[warnbox, text width=0.93\textwidth] (trap) {
+          \textbf{\color{mRed!80!black}避けるべき「専門家の罠」}\\[3pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item \textbf{誤った想定：}「カウンセラーが正しい答えをすべて知っており、それを即座に提供するのが仕事だ」
+            \item 大学教育で培われたこの習慣が\textbf{「間違い指摘反射」}の土台となる。
+            \item 個人の変化がテーマのとき、専門家の答えがすべて正しいとは限らない。
+            \item 専門的能力を提供したい反射を\textbf{意志力で抑え込む}ことが不可欠。
+          \end{itemize}
+        };
+        \node[card, draw=mOrange, fill=mOrange!8, text width=0.93\textwidth, below=5pt of trap] {
+          \textbf{\color{mOrange!90!black}【考察メモ】「意志力で抑え込む」のは現実的か？}\\
+          反射を力づくで我慢するだけでなく、後述の「実践を通じた習慣化（p. 20, 33）」や「クライエントへの純粋な好奇心・探求」へと意識を向けることが実践上の鍵となる。
+        };
+      \end{tikzpicture}
+    \end{column}
+
+    % 右：2つの願望の調和
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.93\textwidth] (wish) {
+          \textbf{\color{mTeal}2つの願望が出合う場としての誠実さ}\\[3pt]
+          MIの対人プロセスでは、クライエントの願望だけでなく\textbf{カウンセラー自身の願望（価値観・アジェンダ）も考慮し、2つの調和をはかる}。
+        };
+
+        % 天秤・交差の図
+        \node[goodbox, text width=2.8cm, align=center, below left=6pt and -1pt of wish.south] (w1) {
+          \textbf{クライエントの願望}\\
+          \scriptsize 自ら設定したテーマ\\具体的な問題・懸念
+        };
+        \node[card, draw=mBlue, fill=mInfoBg, text width=2.8cm, align=center, below right=6pt and -1pt of wish.south] (w2) {
+          \textbf{援助者側の願望・役割}\\
+          \scriptsize 禁煙外来・依存治療\\自殺予防・保護観察
+        };
+        \draw[<->, thick, mTeal] (w1.east) -- (w2.west);
+
+        \node[card, text width=0.93\textwidth, below=45pt of wish] {
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item 自身の意見や手間暇を意識しないのは「全体像の半分しか見ていない」こと。
+            \item 治療側とクライエント側で重視する変化が異なる場合もある（第10章で詳述）。
+            \item 変化を話し合うとき、\textbf{自身の価値観とアジェンダに意識的かつ正直であること}が必須。
+          \end{itemize}
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ==========================================
+\section{2. 受容（Acceptance）}
+% ==========================================
+
+% ------------------------------------------
+% 7. 受容の全体像（Box 2.1）
+% ------------------------------------------
+\begin{frame}{2. 受容（Acceptance）の4側面（pp. 23--24）}
+  \footnotesize
+  ここでいう「人を受容する」とは、\textbf{その人の行為を承認する、あるいは現状を黙認するという意味ではない}（個人的に承認するかどうかは無関係）。Carl Rogersの仕事に源流を持つ4側面からなる。
+
+  \vspace{0.2em}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.88, transform shape]
+    % 中央の4方向スター（Box 2.1の再現）
+    \coordinate (N) at (0, 2.3);
+    \coordinate (S) at (0, -2.3);
+    \coordinate (E) at (2.8, 0);
+    \coordinate (W) at (-2.8, 0);
+    \coordinate (NE) at (0.55, 0.45);
+    \coordinate (NW) at (-0.55, 0.45);
+    \coordinate (SE) at (0.55, -0.45);
+    \coordinate (SW) at (-0.55, -0.45);
+
+    \filldraw[fill=mLightBg, draw=mTeal, very thick]
+      (N) -- (NE) -- (E) -- (SE) -- (S) -- (SW) -- (W) -- (NW) -- cycle;
+    \node[font=\normalsize\bfseries, mTeal] at (0,0) {受 容};
+
+    % 4頂点のラベルと対比カード
+    % 上：絶対的価値
+    \node[font=\footnotesize\bfseries, mTeal, above=1pt of N] (lblN) {① 絶対的価値 (Absolute Worth)};
+    \node[warnbox, text width=3.8cm, font=\scriptsize, left=12pt of lblN] {
+      \textbf{反対：}判断の態度・条件付きの価値づけ
+    };
+
+    % 下：正確な共感
+    \node[font=\footnotesize\bfseries, mTeal, below=1pt of S] (lblS) {② 正確な共感 (Accurate Empathy)};
+    \node[warnbox, text width=3.8cm, font=\scriptsize, right=12pt of lblS] {
+      \textbf{反対：}自分の視点の押しつけ
+    };
+
+    % 右：自律
+    \node[goodbox, text width=4.4cm, right=6pt of E] {
+      \textbf{\color{mGreen!60!black}③ 自律 (Autonomy)}\\
+      \scriptsize 自身の方向を決める奪えない権利と能力の尊重\\
+      \color{mRed!80!black}\textbf{反対：}強制とコントロール
+    };
+
+    % 左：是認
+    \node[goodbox, text width=4.4cm, left=6pt of W] {
+      \textbf{\color{mGreen!60!black}④ 是認 (Affirmation)}\\
+      \scriptsize 強みと努力を探し出して承認する意図的伝達\\
+      \color{mRed!80!black}\textbf{反対：}欠陥探しと治し方の教授
+    };
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+% ------------------------------------------
+% 8. 受容①：絶対的価値とメンシェンビルド
+% ------------------------------------------
+\begin{frame}{受容①：絶対的価値とメンシェンビルド（pp. 23--25）}
   \begin{columns}[T, onlytextwidth]
     \begin{column}{0.48\textwidth}
-      \begin{block}{③ 自律性のサポート (Autonomy)}
-        \begin{itemize}
-          \item 自身の方向を決める奪えない権利と能力の尊重。
-          \item \textbf{反対：}強制とコントロール（心理的反動・防衛性を生む）。
-          \item 選択の自由を認めると防衛性が減り、変化が促進される。
-        \end{itemize}
-      \end{block}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.93\textwidth] (worth) {
+          \textbf{\color{mTeal}無条件の肯定的関心と敬意}\\[2pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item \textbf{Rogers (1980b)：}非支配的な配慮。生得的な権利としての価値を持つ他者への「素朴な信頼感」。
+            \item \textbf{Fromm (1956)：}ありのままの姿で見る能力。他者をその人として成長させてやりたいという配慮（＝\textbf{搾取しないこと}）。
+          \end{itemize}
+        };
+        \node[warnbox, text width=0.93\textwidth, below=6pt of worth] {
+          \textbf{\color{mRed!80!black}「判断の態度」が生み出す逆説}\\[2pt]
+          「誰が敬意に値するかは私が決める」という条件付きの態度のもとでは、人の変わる能力は削がれ、ブロックされる。\\
+          $\Leftrightarrow$ \textbf{ありのままで受容されると、自由な変化が可能になる。}
+        };
+      \end{tikzpicture}
     \end{column}
+
     \begin{column}{0.48\textwidth}
-      \begin{block}{④ 是認 (Affirmation)}
-        \begin{itemize}
-          \item 相手の強みと努力を探し出して承認する意図的なコミュニケーション。
-          \item 心の中で感心する（経験的構成要素）だけでなく、言葉などで伝える（行動的構成要素）必要がある。
-          \item \textbf{反対：}悪い点（欠陥）を探し、治し方を教えること。
-        \end{itemize}
-      \end{block}
-    \end{column}  
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.93\textwidth] (mb) {
+          \textbf{\color{mGreen!60!black}メンシェンビルド（\textit{Menschenbild}：人のあり方）}\\[2pt]
+          最適な治療的条件（土壌・水・日光）があれば、人はポジティブな方向へ自然に成長する（\textbf{自己実現傾向}：Maslow, Rogers）。
+        };
+
+        % どんぐりからブナの木へのテロス図
+        \node[card, text width=2.2cm, align=center, below left=8pt and -2pt of mb.south] (acorn) {
+          \textbf{どんぐり}\\
+          \scriptsize 現在の姿\\（潜在的可能性）
+        };
+        \node[goodbox, text width=2.6cm, align=center, below right=8pt and -2pt of mb.south] (beech) {
+          \textbf{ブナの木}\\
+          \scriptsize 成熟した最終状態\\＝\textbf{テロス (\textit{telos})}
+        };
+        \draw[->, very thick, mGreen!70!black] (acorn.east) -- node[above, font=\scriptsize]{受容・最適条件} (beech.west);
+
+        \node[accentbox, text width=0.93\textwidth, below=48pt of mb] {
+          \textbf{\color{mOrange!90!black}人間観の選択と自己成就予言}\\[2pt]
+          どの人間観（メンシェンビルド）が本当に正しいかはわからなくても、\textbf{私たちは人間の本質をどう見るかを選べる}。そしてその見方は\textbf{自己成就予言}になりやすい（Leake \& King, 1977; Miller, 1985a）。
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ------------------------------------------
+% 9. 受容②：正確な共感
+% ------------------------------------------
+\begin{frame}{受容②：正確な共感（Accurate Empathy）（pp. 25--26）}
+  \footnotesize
+  相手の目を通して世界を見ようとする、相手の内的視点への積極的な関心と理解の努力。\\
+  Rogersが挙げた「変化のもうひとつの必要条件」であり、学習可能な治療技能である。
+
+  \vspace{0.4em}
+  \begin{tikzpicture}
+    \node[titlecard, text width=0.96\textwidth] (def) {
+      \textbf{\color{mTeal}Rogersらによる定義（Rogers, 1965, 1989; Truax \& Carkhuff, 1967）：}\\[2pt]
+      「プライベートで個人的な意味からできあがったクライエントの内的世界を、\textbf{あたかも}カウンセラー自身のものであるかのように感じながら、しかし、\textbf{『あたかも』という性質を決して失わずに}感じること」
+    };
+  \end{tikzpicture}
+
+  \vspace{0.3em}
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[warnbox, text width=0.9\textwidth, minimum height=3.1cm] {
+          \textbf{\color{mRed!80!black}× 視点の押しつけ（反対）}\\[3pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item カウンセラー自身のフレームを押しつける。
+            \item 相手の見解を「無関係」あるいは「見当違い」とみなす態度。
+          \end{itemize}
+        };
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[accentbox, text width=0.9\textwidth, minimum height=3.1cm] {
+          \textbf{\color{mOrange!80!black}△ 同情・同一化（誤解）}\\[3pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item \textbf{同情：}相手への憐れみの感情や仲間意識。
+            \item \textbf{同一化：}「私も同じ経験があるからわかる。私にも話をさせて」と主語が自分にすり替わる。
+          \end{itemize}
+        };
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.9\textwidth, minimum height=3.1cm] {
+          \textbf{\color{mGreen!60!black}◎ 正確な共感（MIの姿勢）}\\[3pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item 自分の経験との同一化の有無は無関係。
+            \item 相手の視点を理解する能力であり、\textbf{そうすること自体が必要だという確信}。
+          \end{itemize}
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ------------------------------------------
+% 10. 受容③④：自律性のサポートと是認
+% ------------------------------------------
+\begin{frame}{受容③ 自律性のサポート ／ 受容④ 是認（pp. 26--28）}
+  \begin{columns}[T, onlytextwidth]
+    % 左：自律性のサポート
+    \begin{column}{0.51\textwidth}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.94\textwidth] (auto) {
+          \textbf{\color{mTeal}③ 自律性のサポート（Autonomy）}\\[2pt]
+          人には自身の方向を決める能力と奪えない権利がある（Deci \& Ryan, 1985）。\\
+          \textbf{・Frankl (2006)：}強制収容所ですべてを奪われても「与えられた環境でいかに振る舞うかという人間としての最後の自由」だけは奪えない。\\
+          \textbf{・人間観の対比：}フロイト（暗い欲動に支配される）vs ロジャーズ（本質的に建設的・信頼に値する $\rightarrow$ 「存在と選択の完全な自由」の提供）。
+        };
+
+        \node[warnbox, text width=0.94\textwidth, below=4pt of auto] (react) {
+          \textbf{\color{mRed!80!black}コントロールの逆説と心理的反動（リアクタンス）}\\[2pt]
+          「飲むことはできません」という言葉は文字通りの真実ではない（飲む選択肢は常に本人にある）。\\
+          選択を束縛すると\textbf{心理的反動}を誘発するが、\textbf{選択の自由を直接認めれば防衛性が減り、変化が促進される}（相手を変えねばならないという負担を手放す）。
+        };
+      \end{tikzpicture}
+    \end{column}
+
+    % 右：是認
+    \begin{column}{0.46\textwidth}
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.93\textwidth] (aff) {
+          \textbf{\color{mGreen!60!black}④ 是認（Affirmation）}\\[2pt]
+          相手の\textbf{強みと努力}を探し出して承認すること。\\[3pt]
+          \begin{itemize}\setlength{\itemsep}{2pt}
+            \item 単なる内面的な感心にとどまらず、\textbf{意図的なコミュニケーションの仕方}として表現する（Rogers, 1980b）。
+          \end{itemize}
+        };
+
+        \node[warnbox, text width=0.93\textwidth, below=6pt of aff] (affbad) {
+          \textbf{\color{mRed!80!black}反対：従来のアセスメントの焦点}\\[2pt]
+          相手の\textbf{「どこが悪いのか（欠陥）」}を探し、悪い点を見いだしたら\textbf{「その治し方を教える」}こと。
+        };
+
+        \node[card, draw=mTeal, fill=mLightBg, text width=0.93\textwidth, below=6pt of affbad] {
+          \textbf{\color{mTeal}受容の4側面の統合（p. 28）：}\\
+          絶対的価値と潜在的可能性を大切にし、覆せない自律性を認識・サポートし、正確な共感で視点を理解しようとし、強みと努力を是認する。
+        };
+      \end{tikzpicture}
+    \end{column}
   \end{columns}
 \end{frame}
 
 % ==========================================
-\section{3. 思いやり}
+\section{3. 思いやり（Compassion）}
 % ==========================================
 
-\begin{frame}{思いやり（Compassion）}
-  第3版から新たに加えられた、MIの基盤となる第3の要素。
+% ------------------------------------------
+% 11. 思いやり（Compassion）
+% ------------------------------------------
+\begin{frame}{3. 思いやり（Compassion）：第3版で追加された理由（pp. 28--29）}
+  \begin{tikzpicture}
+    \node[titlecard, text width=0.96\textwidth] (def) {
+      \textbf{\color{mTeal}思いやり（Compassion / 慈愛）の定義：}\\[2pt]
+      「共に苦しむ」ことや「役に立たない同情」といった個人的な感情的体験ではない。\\
+      \textbf{相手の福祉を積極的に増進しようとすることであり、相手のニーズを満たすことを優先する意図的なコミットメント}である（サービスはクライエントに益するためにあり、自分自身の利益は二の次である）。
+    };
+  \end{tikzpicture}
 
-  \begin{block}{思いやりの定義}
-    \begin{itemize}
-      \item 単なる感情的体験（共に苦しむこと、同情）ではない。
-      \item \textbf{相手の福祉を積極的に増進しようとすることであり、相手のニーズを満たすことを優先する意図的なコミットメント。}
-    \end{itemize}
-  \end{block}
+  \vspace{0.3em}
+  \textbf{\footnotesize なぜ既存の3要素に「思いやり」を付け加えたのか？}
+  \vspace{0.2em}
 
-  \begin{alertblock}{なぜ「思いやり」が追加されたのか？}
-    \begin{itemize}
-      \item 他の3要素（パートナーシップ・受容・引き出す）は、\textbf{自分の私的利益を得る目的（有能な販売員や搾取など）でも実践可能}だからである。
-      \item 治療者が育む信頼が適切なものになるよう、クライエントの最善の利益を第一とする心構えが不可欠。
-    \end{itemize}
-  \end{alertblock}
+  \begin{center}
+  \begin{tikzpicture}[scale=0.92, transform shape]
+    % 左：3要素
+    \node[card, draw=mTeal, text width=4.2cm, align=center] (three) at (0,0) {
+      \textbf{既存の3要素}\\
+      \scriptsize ・パートナーシップ（関係確立）\\
+      ・受容（価値観の理解・決定権の尊重）\\
+      ・引き出す（相手の目的を引き出す）
+    };
+
+    % 分岐上：私的利益
+    \node[warnbox, text width=6.8cm] (sales) at (6.8, 1.05) {
+      \textbf{\color{mRed!80!black}×「私的な利益」が目的の場合}\\[2pt]
+      \scriptsize
+      ・\textbf{有能な販売員}も見込み客と関係を築き、価値観を引き出し、買うかどうかの最終判断は客にあると理解して実践できる。\\
+      ・心理学的技術は\textbf{不適切な信頼や服従・搾取}にも悪用可能（Cialdini, 2007）。
+    };
+
+    % 分岐下：思いやり
+    \node[goodbox, text width=6.8cm] (mi) at (6.8, -1.1) {
+      \textbf{\color{mGreen!60!black}◎「思いやり（クライエントの福祉最優先）」がある場合}\\[2pt]
+      \scriptsize
+      ・治療者が育む信頼が適切なものになるよう、\textbf{正しい心構え}で仕事をする。\\
+      ・世界の主要な宗教が重んじる美徳であり、対人援助職に就く本来の動機づけ。
+    };
+
+    \draw[->, very thick, mRed!80!black] (three.east) -- (sales.west);
+    \draw[->, very thick, mGreen!70!black] (three.east) -- (mi.west);
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 % ==========================================
-\section{4. 引き出す}
+\section{4. 引き出す（Evocation）}
 % ==========================================
 
-\begin{frame}{引き出す（Evocation）：欠陥モデルからの脱却}
-  \begin{columns}[T,onlytextwidth]
+% ------------------------------------------
+% 12. 引き出す（Evocation）：2つの教育モデル
+% ------------------------------------------
+\begin{frame}{4. 引き出す（Evocation）：2つの教育アプローチの対比（pp. 29--30）}
+  \begin{columns}[T, onlytextwidth]
+    % 左：欠陥モデル (docere)
     \begin{column}{0.48\textwidth}
-      \begin{alertblock}{従来の「欠陥モデル」 (\textit{docere})}
-        \begin{itemize}
-          \item 前提：「あなたに欠けているものを私が与えよう」
-          \item 知識、洞察、対処技能などを外から押し込む（講義型）。
-          \item 感染症治療や車の修理には有効だが、\textbf{個人の変化には機能しにくい}。
-        \end{itemize}
-      \end{alertblock}
+      \begin{tikzpicture}
+        \node[warnbox, text width=0.93\textwidth, minimum height=5.5cm] {
+          \textbf{\color{mRed!80!black}従来の「欠陥モデル」と講義型教育}\\[4pt]
+          \textbf{ラテン語：\textit{docere}（ドケレ）}\\
+          \scriptsize （語源：doctrine 教義、docent 講師、indoctrinate 教え込む、docile 従順な、doctor 医師）\footnotesize\\[4pt]
+          \begin{itemize}\setlength{\itemsep}{3pt}
+            \item \textbf{裏側のメッセージ：}\\
+            「あなたの必要とするものは\textbf{私が持っている}から、それをあなたに与えよう」
+            \item \textbf{イメージ：}脳を切り開いて知識・洞察・診断・対処技能を押し込み、縫合する。
+            \item \textbf{アセスメント：}矯正すべき欠陥の探索。
+            \item \textbf{限界：}自動車の修理や感染症治療には合理的だが、\textbf{個人の変化には機能しにくい}。
+          \end{itemize}
+        };
+      \end{tikzpicture}
     \end{column}
+
+    % 右：引き出すモデル (e ducere)
     \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{MIの「引き出すモデル」 (\textit{e ducere})}
-        \begin{itemize}
-          \item 前提：「必要なものはあなたが持っています。一緒に発見しましょう」
-          \item 井戸から水を汲み上げるように、内なる知恵と経験を汲み出す。
-          \item 強みとリソースにフォーカスする。
-        \end{itemize}
-      \end{exampleblock}
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.93\textwidth, minimum height=5.5cm] {
+          \textbf{\color{mGreen!60!black}MIの「強み・引き出すモデル」}\\[4pt]
+          \textbf{ラテン語：\textit{e ducere}（エ・ドゥーケレ）}\\
+          \scriptsize （語源：英語の \textbf{educate［教育する］}＝文字通りに「外へ導き出す」）\footnotesize\\[4pt]
+          \begin{itemize}\setlength{\itemsep}{3pt}
+            \item \textbf{裏側のメッセージ：}\\
+            「必要なものは\textbf{あなたが持っています}。一緒にそれを発見しましょう」
+            \item \textbf{イメージ：}相手の内部にある知恵と経験の\textbf{深い井戸から水を汲み上げる}。
+            \item \textbf{アセスメント：}強みとリソースの理解。
+            \item 人は自分自身についての真の知恵者であり、自分の引き出しの中に動機づけとリソースを持っている。
+          \end{itemize}
+        };
+      \end{tikzpicture}
     \end{column}
   \end{columns}
+\end{frame}
 
-  \vspace{0.8em}
-  \begin{block}{両価性（Ambivalence）との合致}
-    変化に両価的な人の心（内部委員会）には、\textbf{すでに変化に賛成の意見が存在している}。治療者の仕事は、最初から存在する変化への動機づけを誘い出し、強化することである。
-  \end{block}
+% ------------------------------------------
+% 13. なぜ「必要なものは内側にある」と言えるのか？
+% ------------------------------------------
+\begin{frame}{なぜ「必要なものはその人の内側にある」と言えるのか？（pp. 29--31）}
+  \footnotesize
+  教科書（pp. 29--31）では、「必要なものがすでに相手の中にある」と考える\textbf{3つの根拠}が示されている。
+
+  \vspace{0.3em}
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.47\textwidth}
+      \begin{tikzpicture}[node distance=5pt]
+        \node[titlecard, text width=0.93\textwidth] (r1) {
+          \textbf{\color{mTeal}根拠①：過去の行動の背景にある理由}\\
+          その人が今までやってきたことの背景には、\textbf{そうするだけの十分な理由（知恵と経験）}がある。
+        };
+        \node[titlecard, text width=0.93\textwidth, below=of r1] (r2) {
+          \textbf{\color{mTeal}根拠②：初期研究で見いだされた想定外の結果}\\
+          自分自身の\textbf{両価性をいったん解消できれば}、人は専門家の援助や許可をもらわなくても\textbf{自力だけでも前進する}。
+        };
+        \node[goodbox, text width=0.93\textwidth, below=of r2] (r3) {
+          \textbf{\color{mGreen!60!black}根拠③：両価性と「心の中の内部委員会」}\\
+          変化に両価的な人は、すでに内側に\textbf{両サイドの議論}を持っている。本人の前向きな動機づけは、\textbf{治療者が提供できるどのような議論よりも説得力がある}。
+        };
+      \end{tikzpicture}
+    \end{column}
+
+    \begin{column}{0.50\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9, transform shape]
+        % クライエントの内部委員会の図
+        \draw[rounded corners=6pt, thick, mTeal, fill=mLightBg!60] (-3.2,-2.1) rectangle (3.2, 2.3);
+        \node[font=\footnotesize\bfseries, mTeal] at (0, 1.9) {クライエントの心の中（内部委員会）};
+
+        \node[warnbox, text width=2.5cm, align=center] (sustain) at (-1.55, 0.5) {
+          \textbf{現状維持派}\\
+          \scriptsize 現状を支持する議論\\（維持トーク）
+        };
+        \node[goodbox, text width=2.5cm, align=center] (change) at (1.55, 0.5) {
+          \textbf{変化賛成派}\\
+          \scriptsize 変化を良しとする議論\\（チェンジトーク）
+        };
+        \draw[<->, dashed, thick, mTeal] (sustain.east) -- node[above, font=\tiny]{両価性} (change.west);
+
+        \node[accentbox, text width=5.6cm, align=center] (role) at (0, -1.2) {
+          \textbf{\color{mOrange!90!black}治療者の役割：}\\
+          \scriptsize 最初から内部に存在している「変化賛成の意見」を\textbf{誘い出し、強化する}
+        };
+        \draw[->, very thick, mOrange!90!black] (change.south) -- (1.55, -0.65);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % ==========================================
 \section{まとめ：人間中心ケアの原則と成長}
 % ==========================================
 
-\begin{frame}{MIの実践的定義とパーソン・センタード・ケアの原則}
-  \begin{exampleblock}{臨床家のためのMIの定義（第2の定義）}
-    「動機づけ面接は\textbf{パーソン・センタード・カウンセリング・スタイル}であり、変化に関する\textbf{両価性}から生じる一般的な問題を扱うものである。」
-  \end{exampleblock}
+% ------------------------------------------
+% 14. パーソン・センタード・ケアの11の原則
+% ------------------------------------------
+\begin{frame}{臨床家のための定義とパーソン・センタード・ケアの11原則（pp. 31--33）}
+  \begin{tikzpicture}
+    \node[accentbox, text width=0.96\textwidth] {
+      \textbf{\color{mOrange!90!black}MIの第2の実践的な定義（p. 31）：}
+      「動機づけ面接は\textbf{パーソン・センタード・カウンセリング・スタイル}であり、変化に関する\textbf{両価性}から生じる一般的な問題を扱うものである。」
+    };
+  \end{tikzpicture}
 
-  \textbf{パーソン・センタード・ケア（人間中心ケア）の主な原則：}
-  \begin{enumerate}
-    \item サービスは受益者のために存在し、クライエントのニーズが優先される。
-    \item 変化とは本質的に\textbf{自己変化}であり、クライエントは自分自身の専門家である。
-    \item 変化を起こす責任は臨床家にはない（臨床家だけでは何もできない）。
-    \item 会話は権力闘争（レスリング）ではなく、\textbf{ダンス}のように感じられるべきである。
-    \item 動機づけは外から植えつけるものではなく、\textbf{中から引き出されるもの}である。
-    \item 行動に関する選択の最終決断は、常にクライエント自身にある。
-  \end{enumerate}
+  \vspace{0.2em}
+  \scriptsize
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[titlecard, text width=0.91\textwidth, minimum height=4.0cm] {
+          \textbf{\color{mTeal}A. 主権・責任・自己決定}\\[3pt]
+          \textbf{原則1：}サービスは受益者のために存在し、クライエントのニーズが優先される。\\
+          \textbf{原則2：}変化とは本質的に\textbf{自己変化}であり、サービスは自然なプロセスを促進する（Prochaska \& DiClemente, 1984）。\\
+          \textbf{原則4：}変化を起こす責任は臨床家にはない（臨床家だけでは何もできない）。\\
+          \textbf{原則11：}行動の選択の決断は常に本人にあり、臨床家は取り消せない。
+        };
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[goodbox, text width=0.91\textwidth, minimum height=4.0cm] {
+          \textbf{\color{mGreen!60!black}B. 専門性と内なるリソース}\\[3pt]
+          \textbf{原則3：}クライエントは\textbf{自分自身に関する専門家}である。\\
+          \textbf{原則5：}優れたアイデアのすべてを臨床家が思いつく必要はない（ベストではない可能性が高い）。\\
+          \textbf{原則6：}本人が持つ強み・動機づけ・リソースを\textbf{活性化}させることが決定的に重要。\\
+          \textbf{原則8：}状況と必要なものを\textbf{本人がどう見ているか}を理解することが重要。
+        };
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tikzpicture}
+        \node[card, draw=mBlue, fill=mInfoBg, text width=0.91\textwidth, minimum height=4.0cm] {
+          \textbf{\color{mBlue!80!black}C. 協働と対話のスタイル}\\[3pt]
+          \textbf{原則7：}したがって変化には\textbf{パートナーシップと専門家との協働}が必要である。\\
+          \textbf{原則9：}変化は権力闘争（「我々の勝ち」）ではない。会話はレスリングではなく\textbf{ダンス}のように感じられるべき。\\
+          \textbf{原則10：}動機づけは外から植えつけるものではなく、\textbf{中から引き出されるのを待っている}。
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\begin{frame}{成長のプロセスとキーポイント}
-  \begin{block}{実践を通じた成長}
-    \begin{itemize}
-      \item スピリットを最初から完全に体得している必要はない。
-      \item 知識を振り返り、他者といるときにこのスタイルを実践し続けることで、心構えが内面化され、自発的・自動的なものになっていく。
-    \end{itemize}
-  \end{block}
+% ------------------------------------------
+% 15. 成長のプロセスと「MIの祈り」（Box 2.3）
+% ------------------------------------------
+\begin{frame}{成長のプロセスと「MIの祈り」（pp. 33--34）}
+  \footnotesize
+  この心構えを最初から完全に体得していることは実践の必須条件ではない。実践を長く続けることで身につく。
 
-  \begin{exampleblock}{本章のキーポイント}
-    \begin{itemize}
-      \item MIは誰かに「対して」ではなく、誰かの「\textbf{ために}」、誰かと「\textbf{共に}」行われる。
-      \item MIのスピリットの4特質：\textbf{パートナーシップ、受容、思いやり、引き出す}。
-      \item 受容の4側面：\textbf{絶対的価値、正確な共感、自律性のサポート、是認}。
-      \item MIはもともと存在しているものを引き出すことであり、欠けているものを植えつけることではない。
-    \end{itemize}
-  \end{exampleblock}
+  \vspace{0.3em}
+  \textbf{\scriptsize ダライ・ラマ＆エクマン（2008）による「思いやりを育む成長のプロセス」：}
+  \begin{center}
+  \begin{tikzpicture}[node distance=0.5cm, scale=0.92, transform shape]
+    \node[card, fill=mLightBg, text width=2.6cm, align=center] (s1) {\textbf{1. 知識}\\最初のステップ};
+    \node[card, fill=mInfoBg, text width=2.9cm, align=center, right=of s1] (s2) {\textbf{2. 振り返りと内面化}\\知識をいつも振り返る};
+    \node[card, fill=mOrange!15, text width=2.8cm, align=center, right=of s2] (s3) {\textbf{3. 確信と一体化}\\心構えと一体になる};
+    \node[goodbox, text width=3.1cm, align=center, right=of s3] (s4) {\textbf{4. 自発的・自動化}\\リハーサル不要で引き出される};
+    \draw[->, very thick, mTeal] (s1) -- (s2);
+    \draw[->, very thick, mTeal] (s2) -- (s3);
+    \draw[->, very thick, mTeal] (s3) -- (s4);
+  \end{tikzpicture}
+  \end{center}
+
+  \vspace{0.2em}
+  \begin{tikzpicture}
+    \node[titlecard, text width=0.96\textwidth] {
+      \textbf{\color{mTeal}BOX 2.3：筆者自身が思い返すことなど ――「MIの祈り」（William R. Miller）}\\[2pt]
+      \scriptsize
+      ネイティブアメリカンの治療者・部族長（Raymond Daw）との対話から生まれた、カウンセリング前に心を整える祈り（抜粋）：\\[3pt]
+      \begin{minipage}[t]{0.48\linewidth}
+        ・願わくは、患者の\textbf{同伴者}となり、空のような広い心で話を聞けるようにお導きください。\\
+        ・患者の瞳に映るものが見える目と、語りを熱心に聴ける耳をお与えください。\\
+        ・共に歩める\textbf{安全で開けた平地}をお作りください。
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.48\linewidth}
+        ・患者自身の姿がくっきりと映し出されるような\textbf{鏡池}に私を変えてください。\\
+        ・患者が自分自身の道を選ぶことを讃え、敬い、選んだ道を歩むことを祝福できますように。\\
+        ・患者と私は異なっていても、一つになれる平和な場所があることを教えてください。
+      \end{minipage}
+    };
+  \end{tikzpicture}
+\end{frame}
+
+% ------------------------------------------
+% 16. 本章のキーポイント
+% ------------------------------------------
+\begin{frame}{まとめ：第2章のキーポイント（p. 35）}
+  \begin{tikzpicture}[node distance=5pt]
+    \node[card, draw=mTeal, fill=mLightBg, text width=0.95\textwidth] (k1) {
+      \textbf{\color{mTeal}1. MIの実践的定義}\\
+      MIは\textbf{パーソン・センタード・カウンセリング・スタイル}であり、変化についての\textbf{両価性}によって起こる普遍的な問題を扱う。
+    };
+    \node[card, draw=mBlue, fill=mInfoBg, text width=0.95\textwidth, below=of k1] (k2) {
+      \textbf{\color{mBlue!80!black}2. 協働の方向性}\\
+      MIは誰かに「向けて」あるいは誰かに「対して」ではなく、\textbf{誰かの「ために」、あるいは誰かと「共に」}行われる。
+    };
+    \node[goodbox, text width=0.95\textwidth, below=of k2] (k3) {
+      \textbf{\color{mGreen!60!black}3. スピリットの4つの特質}\\
+      MIの根底にあるスピリットがもつ4つの特質は、\textbf{パートナーシップ、受容、思いやり、引き出す}である。
+    };
+    \node[accentbox, text width=0.95\textwidth, below=of k3] (k4) {
+      \textbf{\color{mOrange!90!black}4. 受容の4つの側面}\\
+      受容には、\textbf{絶対的価値、正確な共感、自律性のサポート、是認}という4つの側面がある。
+    };
+    \node[card, draw=mTeal, fill=mLightBg, text width=0.95\textwidth, below=of k4] (k5) {
+      \textbf{\color{mTeal}5. 欠陥モデルから引き出すモデルへ}\\
+      MIは\textbf{もともと存在しているものを引き出すこと}であり、欠けているものを後から植えつけるようなことではない。
+    };
+  \end{tikzpicture}
 \end{frame}
 
 \end{document}
